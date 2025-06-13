@@ -106,3 +106,6 @@ Pull requests are welcome! If you'd like to improve or extend the project, feel 
 
 https://github.com/user-attachments/assets/c9b3cbe9-12f5-403f-9444-a7ea28b8a0e3
 
+## Logic App Designer 
+![Editing Share-Safely_README md at main · GB72900_Share-Safely and 7 more pages - Personal - Microsoft​ Edge 6_13_2025 4_49_14 AM](https://github.com/user-attachments/assets/f7583521-1deb-4df6-bb6c-ab5d5911d8c9)
+
