@@ -1,1 +1,127 @@
-
+{
+    "definition": {
+        "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+        "contentVersion": "1.0.0.0",
+        "triggers": {
+            "Recurrence": {
+                "recurrence": {
+                    "interval": 1,
+                    "frequency": "Day",
+                    "timeZone": "Central Standard Time",
+                    "schedule": {
+                        "hours": [
+                            12
+                        ],
+                        "minutes": [
+                            30
+                        ]
+                    }
+                },
+                "evaluatedRecurrence": {
+                    "interval": 1,
+                    "frequency": "Day",
+                    "timeZone": "Central Standard Time",
+                    "schedule": {
+                        "hours": [
+                            12
+                        ],
+                        "minutes": [
+                            30
+                        ]
+                    }
+                },
+                "type": "Recurrence"
+            }
+        },
+        "actions": {
+            "Lists_blobs_(V2)": {
+                "runAfter": {},
+                "metadata": {
+                    "JTJmdXBsb2Fkcw==": "/uploads"
+                },
+                "type": "ApiConnection",
+                "inputs": {
+                    "host": {
+                        "connection": {
+                            "name": "@parameters('$connections')['azureblob-1']['connectionId']"
+                        }
+                    },
+                    "method": "get",
+                    "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent('https://sharesafelyrg.blob.core.windows.net'))}/foldersV2/@{encodeURIComponent(encodeURIComponent('JTJmdXBsb2Fkcw=='))}",
+                    "queries": {
+                        "nextPageMarker": "",
+                        "useFlatListing": false
+                    }
+                }
+            },
+            "For_each": {
+                "foreach": "@body('Lists_blobs_(V2)')?['value']",
+                "actions": {
+                    "Condition": {
+                        "actions": {
+                            "Delete_blob_(V2)": {
+                                "type": "ApiConnection",
+                                "inputs": {
+                                    "host": {
+                                        "connection": {
+                                            "name": "@parameters('$connections')['azureblob-1']['connectionId']"
+                                        }
+                                    },
+                                    "method": "delete",
+                                    "headers": {
+                                        "SkipDeleteIfFileNotFoundOnServer": false
+                                    },
+                                    "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent('https://sharesafelyrg.blob.core.windows.net'))}/files/@{encodeURIComponent(encodeURIComponent(item()?['Path']))}"
+                                }
+                            }
+                        },
+                        "else": {
+                            "actions": {}
+                        },
+                        "expression": {
+                            "and": [
+                                {
+                                    "lessOrEquals": [
+                                        "@item()?['lastModified']",
+                                        "@addMinutes(utcNow(), -1)"
+                                    ]
+                                }
+                            ]
+                        },
+                        "type": "If"
+                    }
+                },
+                "runAfter": {
+                    "Lists_blobs_(V2)": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "Foreach"
+            }
+        },
+        "outputs": {},
+        "parameters": {
+            "$connections": {
+                "type": "Object",
+                "defaultValue": {}
+            }
+        }
+    },
+    "parameters": {
+        "$connections": {
+            "type": "Object",
+            "value": {
+                "azureblob-1": {
+                    "id": "/subscriptions/eed3ed69-9338-4177-8462-92e0bea8eeff/providers/Microsoft.Web/locations/centralus/managedApis/azureblob",
+                    "connectionId": "/subscriptions/eed3ed69-9338-4177-8462-92e0bea8eeff/resourceGroups/ShareSafelyRG/providers/Microsoft.Web/connections/azureblob-5",
+                    "connectionName": "azureblob-5",
+                    "connectionProperties": {
+                        "authentication": {
+                            "type": "ManagedServiceIdentity"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
