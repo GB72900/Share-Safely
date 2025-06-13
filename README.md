@@ -93,6 +93,7 @@ A secure Azure-based web application that allows users to upload files to Azure 
 Pull requests are welcome! If you'd like to improve or extend the project, feel free to open an issue or reach out to: garett.m.blake@gmail.com
 
 ## Demo 
+- This demo shows a user securely uploading a file through the ShareSafely web app. A secure, time-limited download link is generated instantly using Azure Blob Storage and SAS token logic.
 
 
 https://github.com/user-attachments/assets/c9b3cbe9-12f5-403f-9444-a7ea28b8a0e3
