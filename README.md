@@ -4,8 +4,11 @@ A secure Azure-based web application that allows users to upload files to Azure 
 
 ---
 
-## 📁 Secure File Upload Workflow (Web App)
+##  Secure File Upload Workflow (Web App)
 ![WEBAPPP drawio](https://github.com/user-attachments/assets/15908e4f-516d-47bb-a91e-a13de6c2bbf9)
+
+## Blob Cleanup Automation (Logic App)
+![SecondDiagram](https://github.com/user-attachments/assets/af32aed7-74d3-47ed-8957-54a02159431b)
 
 
 
