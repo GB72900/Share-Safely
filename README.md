@@ -27,13 +27,20 @@ A secure Azure-based web application that allows users to upload files to Azure 
 
 ## Repository Layout
 <pre> ShareSafely/
-├── WebApp/
-│ ├── Controllers/
-│ │ └── HomeController.cs 🚀 Upload & SAS generation logic
-│ └── Views/ 💻 Razor views
-├── LogicApp/
-│ └── DeleteOldUploads.json 🧹 Logic App for automatic cleanup
-└── README.md </pre>
+├── WebApp/                        # Main C# ASP.NET Core web app
+│   ├── Controllers/
+│   │   └── HomeController.cs      # Upload logic, SAS link generation
+│   ├── Views/
+│   ├── wwwroot/
+│   └── appsettings.json          # (Optional) If using any local config
+│
+├── LogicApp/                      # Logic App files for cleanup
+│   └── DeleteOldUploads.json     # Exported Logic App definition
+│
+├── .gitignore
+├── README.md
+└── azure-publish-settings.json   # (Optional, if saved from Visual Studio)
+ </pre>
 
 ## Set Up and Deployment 
   
