@@ -1,1 +1,21 @@
+@{
+    ViewData["Title"] = "Upload File";
+}
+
+<h2>Upload a File</h2>
+
+<form asp-action="Upload" asp-controller="Home" method="post" enctype="multipart/form-data">
+    <div>
+        <input type="file" name="file" required />
+    </div>
+    <br />
+    <button type="submit">Upload</button>
+</form>
+
+@if (ViewBag.FileLink != null)
+{
+    <hr />
+    <h4>Time-limited access link:</h4>
+    <a href="@ViewBag.FileLink" target="_blank">@ViewBag.FileLink</a>
+}
 
