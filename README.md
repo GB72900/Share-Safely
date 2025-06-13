@@ -1,0 +1,86 @@
+# ShareSafely - File Share Web App
+
+A secure Azure-based web application that allows users to upload files to Azure Blob Storage and generates a time-limited share link. Includes a cleanup Logic App to automatically delete expired uploads.
+
+---
+
+## Table of Contents
+
+- [How it Works](#how-it-works)
+- [Repository Layout](#repository-layout)
+- [Setup & Deployment](#setup--deployment)
+- [Usage](#usage)
+- [Prerequisites](#prerequisites)
+- [Contributing](#contributing)
+
+---
+
+## How it Works
+
+1. User uploads a file via the web application.  
+2. The app retrieves credentials securely from Azure Key Vault.  
+3. Blob is stored in Azure Blob Storage.  
+4. A secure SAS link is generated, valid for 30 minutes.  
+5. A scheduled Azure Logic App deletes old files after 1 day.
+
+---
+
+## Repository Layout
+<pre> ShareSafely/
+├── WebApp/
+│ ├── Controllers/
+│ │ └── HomeController.cs 🚀 Upload & SAS generation logic
+│ └── Views/ 💻 Razor views
+├── LogicApp/
+│ └── DeleteOldUploads.json 🧹 Logic App for automatic cleanup
+└── README.md </pre>
+
+## Set Up and Deployment 
+  
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/GB72900/share-safely.git
+   cd share-safely
+   
+2. **Create & Configure Resources in Azure**
+- Blob Storage account with a container named uploads
+
+- Azure App Service + publish C# web app using Visual Studio
+
+- Azure Key Vault with secret: BlobStorageConnectionString
+
+- Enable Managed Identity for App Service & grant access in Key Vault
+
+3. **Logic App for Cleanup**
+- Import LogicApp/DeleteOldUploads.json into Azure
+
+- Use Managed Identity to connect to your Blob Storage
+
+- Set container path to uploads
+
+- Use recurrence trigger (daily)
+
+- Delete blobs older than 1 day using lastModified
+
+## Usage
+- Navigate to the deployed web app
+
+- Upload any file
+
+- You’ll receive a secure download link
+
+- Link expires in 30 minutes
+
+- Behind the scenes, a Logic App cleans up expired blobs daily
+
+## Prerequisites
+- Azure Subscription
+
+- Visual Studio with ASP.NET Core tools
+
+- Azure CLI or Portal access
+
+- Permissions to deploy App Services, Key Vault, Blob Storage, Logic Apps
+
+  ## Contributing
+Pull requests are welcome! If you'd like to improve or extend the project, feel free to open an issue or reach out to: garett.m.blake@gmail.com
